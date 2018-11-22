@@ -18,19 +18,43 @@ function sendEmail(){
             message: 'email is invalid'
         },    
         {
-            field: '.age-input',
-            regex: /\d{1,3}/,
-            message: 'age is invalid'
-        },        
+            field: '.subject-input',
+            regex: /\w{3,}/,
+            message: 'subject must be at least 3 characters'
+        },
+        {
+            field: '.message-input',
+            regex: /\w{3,}/,
+            message: 'message must be at least 3 characters'
+        }        
     ]
 
+    var errors = 0;
     for(let i=0; i< testValues.length; i++){
         var value = $( testValues[i].field ).val();
         if( testValues[i].regex.test( value )){
             displayError(testValues[i].field, '');
         } else {
             displayError(testValues[i].field, testValues[i].message);
+            errors++;
         }        
+    }
+
+    if(errors ===0){
+        $.ajax({
+            url: 'http://localhost:3000/sendEmail',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                name: $('.name-input').val(),
+                email: $('.email-input').val(),
+                subject: $('.subject-input').val(),
+                message: $('.message-input').val()
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        })
     }
 }
 

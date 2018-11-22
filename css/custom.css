@@ -23,3 +23,7 @@
     line-height: 2em;
     color: red;
 }
+
+.contact-form > .error-container > input, .contact-form > .error-container > textarea {
+    color: black;
+}
