@@ -6,6 +6,15 @@ const server = express ();
 
 server.use (express.urlencoded ({ extended: false}))
 
+//allows anything with a different domain name to access the server
+// by adding these headers
+
+server.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  });
+
 server.post('/sendemail', (request, response) => {
     console.log(request.body);
     const sgMail = require('@sendgrid/mail');
